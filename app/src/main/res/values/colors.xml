@@ -8,4 +8,5 @@
     <color name="amber">#FFC107</color>
     <color name="orange">#FF5722</color>
     <color name="deep_orange">#e64a19</color>
+    <color name="light_orange">#ccFF5722</color>
 </resources>
