@@ -5,5 +5,4 @@ package cn.alien95.homework.model;
  */
 public class ToDoModel {
 
-
 }
