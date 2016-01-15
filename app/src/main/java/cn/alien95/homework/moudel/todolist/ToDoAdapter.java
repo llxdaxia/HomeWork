@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import cn.alien95.homework.R;
+import cn.alien95.homework.model.bean.ToDo;
 
 /**
  * Created by linlongxin on 2016/1/7.
@@ -32,14 +33,22 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
 
     class ToDoViewHolder extends RecyclerView.ViewHolder{
 
+        private TextView title;
         private TextView content;
+        private TextView time;
 
         public ToDoViewHolder(Context context,@LayoutRes int layout) {
             super(LayoutInflater.from(context).inflate(layout,null));
             content = (TextView) itemView.findViewById(R.id.content);
+            title = (TextView) itemView.findViewById(R.id.title);
+            time = (TextView) itemView.findViewById(R.id.time);
         }
 
-
+        public void setData(ToDo object){
+            title.setText(object.getTitle());
+            content.setText(object.getContent());
+            time.setText(object.getTime() + "");
+        }
 
     }
 }

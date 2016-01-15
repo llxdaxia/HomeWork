@@ -10,22 +10,51 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SqlHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
-    private String DATABASE_NAME;
-    private String TABLE_NAME;
 
+    private static SqlHelper instance;
 
-    public SqlHelper(Context context, String name) {
-        super(context, name, null, DATABASE_VERSION);
-        DATABASE_NAME = name;
+    public enum TableName {
+
+        TODO_TABLE("todo");
+        private String name;
+
+        TableName(String name) {
+            this.name = name;
+        }
+    }
+
+    private SqlHelper(Context context, String dataBaseName) {
+        super(context, dataBaseName, null, DATABASE_VERSION);
+    }
+
+    public static void init(Context context, String dataBaseName) {
+        instance = new SqlHelper(context, dataBaseName);
+    }
+
+    public static SqlHelper getInstance() {
+        return instance;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        String sql;
+        for (TableName table : TableName.values()) {
+            sql = "create table if not exists " + table + " (Id integer NOT NULL AUTO_INCREMENT, Title varchar(32) NOT NULL, " +
+                    "Content varchar(500) NOT NULL, Time long NOT NULL,PRIMARY KEY (Id))";
+            db.execSQL(sql);
+        }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (newVersion > oldVersion) {
+            String sql;
+            for (TableName table : TableName.values()) {
+                sql = "DROP TABLE IF EXISTS " + table;
+                db.execSQL(sql);
+            }
+            onCreate(db);
+        }
 
     }
 

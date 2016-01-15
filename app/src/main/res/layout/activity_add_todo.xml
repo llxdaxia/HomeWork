@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/include_toolbar"/>
+
+    <EditText android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textSize="16sp"
+        android:hint="标题"
+        tools:text="考试终于结束了"
+        />
+
+    <EditText android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/write"
+        android:layout_margin="16sp"
+        android:gravity="top"
+        android:hint="内容"
+        tools:text="今天好冷啊，在网校冷死爹了"/>
+
+</LinearLayout>
