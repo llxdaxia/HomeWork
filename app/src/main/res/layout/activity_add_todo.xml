@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/include_toolbar"/>
+    <include layout="@layout/include_toolbar" />
 
-    <EditText android:id="@+id/title"
+    <EditText
+        android:id="@+id/title"
+        style="@style/TextAppearance.AppCompat.Display4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:textSize="16sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:hint="标题"
-        tools:text="考试终于结束了"
-        />
+        android:textSize="16sp"
+        tools:text="考试终于结束了" />
 
-    <EditText android:id="@+id/content"
+    <EditText
+        android:id="@+id/content"
+        style="@style/TextAppearance.AppCompat.Display4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/write"
         android:layout_margin="16sp"
+        android:layout_marginTop="8dp"
+        android:background="@color/write"
         android:gravity="top"
         android:hint="内容"
-        tools:text="今天好冷啊，在网校冷死爹了"/>
+        android:textSize="16sp"
+        tools:text="今天好冷啊，在网校冷死爹了" />
 
 </LinearLayout>

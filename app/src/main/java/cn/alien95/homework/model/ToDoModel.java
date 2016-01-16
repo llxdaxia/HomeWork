@@ -14,9 +14,9 @@ import cn.alien95.homework.utils.Utils;
 /**
  * Created by linlongxin on 2016/1/5.
  */
-public class ToDoModel extends Model{
+public class ToDoModel extends Model {
 
-    private SQLiteDatabase db;
+    private static SQLiteDatabase db;
 
     public static ToDoModel getInstance() {
         return (ToDoModel) getInstance(ToDoModel.class);
@@ -24,49 +24,57 @@ public class ToDoModel extends Model{
 
     //插入数据
     public void insertDataToDB(ToDo object) {
-        if(object.getTitle().isEmpty() || object.getContent().isEmpty()){
+        if (object.getTitle().isEmpty() || object.getContent().isEmpty()) {
             Utils.Toast("标题或内容不能为空");
             return;
         }
         db = SqlHelper.getInstance().getWritableDatabase();
-        db.beginTransaction();
         ContentValues content = new ContentValues();
-        content.put("title", object.getTitle());
-        content.put("content", object.getContent());
-        content.put("time", object.getTime());
+        content.put("Title", object.getTitle());
+        content.put("Content", object.getContent());
+        content.put("Time", object.getTime());
         db.insert(String.valueOf(SqlHelper.TableName.TODO_TABLE), null, content);
-        db.setTransactionSuccessful();
     }
 
     //删除数据
-    public void deleteDataFromDB(ToDo object){
+    public static void deleteDataFromDB(ToDo object) {
         db = SqlHelper.getInstance().getWritableDatabase();
-        db.beginTransaction();
-        db.delete(String.valueOf(SqlHelper.TableName.TODO_TABLE),"title",new String[]{object.getTitle()});
-        db.setTransactionSuccessful();
+        db.delete(String.valueOf(SqlHelper.TableName.TODO_TABLE), "Id = ?", new String[]{object.getId() + ""});
     }
 
-    public void getDataFromDB(){
+    //修改数据
+    public static void updateDataFromDB(ToDo object) {
+        db = SqlHelper.getInstance().getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Title", object.getTitle());
+        contentValues.put("Content", object.getContent());
+        contentValues.put("Time", object.getTime());
+        db.update(String.valueOf(SqlHelper.TableName.TODO_TABLE), contentValues, "Id = ?", new String[]{object.getId() + ""});
+    }
+
+    //查询数据
+    public static List<ToDo> getDataFromDB() {
         db = SqlHelper.getInstance().getReadableDatabase();
-        db.beginTransaction();
-        int count;
         Cursor cursor = db.query(String.valueOf(SqlHelper.TableName.TODO_TABLE),
                 null,
                 null,
                 null,
                 null, null, null);
+        List<ToDo> toDoList = new ArrayList<ToDo>(cursor.getCount());
+        Utils.Log("cursor_count:" + cursor.getCount());
         if (cursor.getCount() > 0) {
-            List<ToDo> orderList = new ArrayList<ToDo>(cursor.getCount());
+            cursor.moveToFirst();
             while (cursor.moveToNext()) {
-                ToDo order = cursor.getExtras(cursor);
-                orderList.add(order);
+                ToDo toDo = new ToDo();
+                toDo.setId(cursor.getInt(cursor.getColumnIndex("Id")));
+                toDo.setContent(cursor.getString(cursor.getColumnIndex("Content")));
+                toDo.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
+                toDo.setTime(cursor.getLong(cursor.getColumnIndex("Time")));
+                toDoList.add(toDo);
             }
-            return orderList;
         }
-        if (cursor.moveToFirst()) {
-            count = cursor.getInt(0);
-        }
-        db.setTransactionSuccessful();
+        return toDoList;
+
     }
 
 }

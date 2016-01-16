@@ -16,5 +16,6 @@ public class App extends Application {
 
         SqlHelper.init(this, "HomeWork");  //初始化数据库
         Utils.init(this);
+        Utils.setDebugtag("HomeWork");
     }
 }

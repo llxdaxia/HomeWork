@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HomeWork</string>
+    <string name="app_name">作业</string>
     <string name="title_activity_main2">Main2Activity</string>
 
     <string name="navigation_drawer_open">打开抽屉</string>
