@@ -1,22 +1,29 @@
 package cn.alien95.homework.moudel.todolist;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+
 import cn.alien95.homework.R;
 import cn.alien95.homework.app.BaseActivity;
 import cn.alien95.homework.model.ToDoModel;
+import cn.alien95.homework.model.bean.ToDo;
 import cn.alien95.homework.moudel.weather.WeatherActivity;
 
 /**
@@ -26,6 +33,8 @@ public class ToDoListActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String UPDATE_DATA = "UPDATE_DATA";
+    public static final String INTENT_DATA = "INTENT_DATA";
+    public static final String SEARCH_WORD = "SEARCH_WORD";
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -59,14 +68,14 @@ public class ToDoListActivity extends BaseActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ToDoAdapter();
         recyclerView.setAdapter(adapter);
-        adapter.setData(ToDoModel.getDataFromDB());
+        adapter.addData(ToDoModel.getInstance().getDataFromDB());
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         adapter.clear();
-        adapter.setData(ToDoModel.getDataFromDB());
+        adapter.addData(ToDoModel.getInstance().getDataFromDB());
     }
 
     @Override
@@ -80,16 +89,35 @@ public class ToDoListActivity extends BaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_todolist, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        MenuItem mSearchMenuItem = menu.findItem(R.id.search_view);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(mSearchMenuItem);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint("搜索");
+        searchView.setIconifiedByDefault(true);
+        searchView.setEnabled(true);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                ArrayList<ToDo> data = (ArrayList<ToDo>) ToDoModel.getInstance().queryFromDB("Title = ? OR Content = ?", new String[]{query});
+                Intent intent = new Intent();
+                intent.putExtra(INTENT_DATA, data);
+                intent.putExtra(SEARCH_WORD, query);
+                intent.setClass(ToDoListActivity.this, SearchActivity.class);
+                startActivity(intent);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.search) {
-            startActivity(new Intent(this,SearchActivity.class));
-        }
-        return true;
-    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

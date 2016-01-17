@@ -9,7 +9,6 @@ import java.util.List;
 
 import cn.alien95.homework.model.bean.ToDo;
 import cn.alien95.homework.utils.SqlHelper;
-import cn.alien95.homework.utils.Utils;
 
 /**
  * Created by linlongxin on 2016/1/5.
@@ -23,58 +22,61 @@ public class ToDoModel extends Model {
     }
 
     //插入数据
-    public void insertDataToDB(ToDo object) {
+    public long insertDataToDB(ToDo object) {
         if (object.getTitle().isEmpty() || object.getContent().isEmpty()) {
-            Utils.Toast("标题或内容不能为空");
-            return;
+            return 0;
         }
         db = SqlHelper.getInstance().getWritableDatabase();
         ContentValues content = new ContentValues();
         content.put("Title", object.getTitle());
         content.put("Content", object.getContent());
         content.put("Time", object.getTime());
-        db.insert(String.valueOf(SqlHelper.TableName.TODO_TABLE), null, content);
+        return db.insert(String.valueOf(SqlHelper.TableName.TODO_TABLE), null, content);
     }
 
     //删除数据
-    public static void deleteDataFromDB(ToDo object) {
+    public int deleteDataFromDB(ToDo object) {
         db = SqlHelper.getInstance().getWritableDatabase();
-        db.delete(String.valueOf(SqlHelper.TableName.TODO_TABLE), "Id = ?", new String[]{object.getId() + ""});
+        return db.delete(String.valueOf(SqlHelper.TableName.TODO_TABLE), "Id = ?", new String[]{object.getId() + ""});
     }
 
     //修改数据
-    public static void updateDataFromDB(ToDo object) {
+    public int updateDataFromDB(ToDo object) {
         db = SqlHelper.getInstance().getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("Title", object.getTitle());
         contentValues.put("Content", object.getContent());
         contentValues.put("Time", object.getTime());
-        db.update(String.valueOf(SqlHelper.TableName.TODO_TABLE), contentValues, "Id = ?", new String[]{object.getId() + ""});
+        return db.update(String.valueOf(SqlHelper.TableName.TODO_TABLE), contentValues, "Id = ?", new String[]{object.getId() + ""});
     }
 
-    //查询数据
-    public static List<ToDo> getDataFromDB() {
+    public List<ToDo> queryFromDB(String whereClause, String[] whereArgs) {
         db = SqlHelper.getInstance().getReadableDatabase();
         Cursor cursor = db.query(String.valueOf(SqlHelper.TableName.TODO_TABLE),
                 null,
-                null,
-                null,
+                whereClause,
+                whereArgs,
                 null, null, null);
+        cursor.moveToFirst();
+
         List<ToDo> toDoList = new ArrayList<ToDo>(cursor.getCount());
-        Utils.Log("cursor_count:" + cursor.getCount());
         if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            while (cursor.moveToNext()) {
+            do {
                 ToDo toDo = new ToDo();
                 toDo.setId(cursor.getInt(cursor.getColumnIndex("Id")));
                 toDo.setContent(cursor.getString(cursor.getColumnIndex("Content")));
                 toDo.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
                 toDo.setTime(cursor.getLong(cursor.getColumnIndex("Time")));
                 toDoList.add(toDo);
-            }
+
+            } while (cursor.moveToNext());
         }
         return toDoList;
+    }
 
+    //查询数据
+    public List<ToDo> getDataFromDB() {
+        return queryFromDB(null, null);
     }
 
 }

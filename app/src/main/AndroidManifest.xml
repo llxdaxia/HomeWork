@@ -12,26 +12,15 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".moudel.todolist.ToDoListActivity">
+        <activity
+            android:name=".moudel.todolist.ToDoListActivity"
+            android:launchMode="singleTop">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-
-        <activity
-            android:name=".moudel.weather.WeatherActivity"
-            android:label="天气" />
-
-        <activity android:name=".moudel.todolist.AddToDoActivity"
-            android:label="添加"/>
-
-        <activity
-            android:name=".moudel.todolist.SearchActivity"
-            android:label="搜索">
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -41,6 +30,27 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
 
+        </activity>
+
+        <activity
+            android:name=".moudel.weather.WeatherActivity"
+            android:label="天气" />
+
+        <activity
+            android:name=".moudel.todolist.AddToDoActivity"
+            android:label="添加" />
+
+        <activity
+            android:name=".moudel.todolist.SearchActivity"
+            android:label="结果">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
 
 

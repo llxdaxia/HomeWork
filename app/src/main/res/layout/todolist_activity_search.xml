@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include layout="@layout/include_toolbar"/>
 
-    <LinearLayout android:id="@+id/result"
+    <LinearLayout android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -17,24 +18,34 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="18sp"
+            android:textStyle="bold"
             android:text="搜索无任务"/>
 
         <TextView android:id="@+id/add_todo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Display4"
             android:text="添加一个任务&#160;"
             android:drawableRight="@drawable/ic_origin_add"/>
     </LinearLayout>
 
+    <TextView android:id="@+id/hint_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_margin="16dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        tools:text="搜索&#34;"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

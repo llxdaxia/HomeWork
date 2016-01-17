@@ -10,6 +10,7 @@ import cn.alien95.homework.R;
 import cn.alien95.homework.app.BaseActivity;
 import cn.alien95.homework.model.ToDoModel;
 import cn.alien95.homework.model.bean.ToDo;
+import cn.alien95.homework.utils.Utils;
 
 /**
  * Created by linlongxin on 2016/1/15.
@@ -52,9 +53,22 @@ public class AddToDoActivity extends BaseActivity {
         String contentStr = content.getText().toString();
         if (item.getItemId() == R.id.finish) {
             if (todo != null) {
-                ToDoModel.updateDataFromDB(new ToDo(todo.getId(), titleStr, contentStr, System.currentTimeMillis()));
-            } else
-                ToDoModel.getInstance().insertDataToDB(new ToDo(titleStr, contentStr, System.currentTimeMillis()));
+                int result = ToDoModel.getInstance().updateDataFromDB(new ToDo(todo.getId(), titleStr, contentStr, System.currentTimeMillis()));
+                if (result == 0) {
+                    Utils.SackbarShort(title, "标题或内容不能为空");
+                    return true;
+                }
+            } else {
+                long responseCode = ToDoModel.getInstance().insertDataToDB(new ToDo(titleStr, contentStr, System.currentTimeMillis()));
+                if (responseCode == 0) {
+                    Utils.SackbarShort(title, "标题或内容不能为空");
+                    return true;
+                } else if (responseCode == -1) {
+                    Utils.SackbarShort(title, "标题重复");
+                    return true;
+                }
+            }
+
             finish();
         }
         return true;

@@ -6,49 +6,84 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import cn.alien95.homework.R;
 import cn.alien95.homework.app.BaseActivity;
+import cn.alien95.homework.model.ToDoModel;
+import cn.alien95.homework.model.bean.ToDo;
+import cn.alien95.homework.utils.Utils;
 
 /**
  * Created by linlongxin on 2016/1/17.
  */
 public class SearchActivity extends BaseActivity {
 
+    @Bind(R.id.show_result)
+    TextView showResult;
+    @Bind(R.id.add_todo)
+    TextView addTodo;
+    @Bind(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @Bind(R.id.linear_layout)
+    LinearLayout linearLayout;
+    @Bind(R.id.hint_search)
+    TextView hintSearch;
+    private List<ToDo> data;
+    private ToDoAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.todolist_activity_search);
+        ButterKnife.bind(this);
         setToolbarIsBack(true);
 
+        data = (List<ToDo>) getIntent().getSerializableExtra(ToDoListActivity.INTENT_DATA);
+        Utils.Log("data:" + (data.isEmpty()));
+        adapter = new ToDoAdapter();
+        showResult(data, getIntent().getStringExtra(ToDoListActivity.SEARCH_WORD));
+
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        handleIntent(intent);
-    }
-
-    public void handleIntent(Intent intent) {
-        //Intent.ACTION_VIEW  android:searchSuggestIntentAction="android.intent.action.VIEW"  还在这个view中
-        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            // handles a click on a search suggestion; launches activity to show word
-            intent.getData();
-            intent.setClass(this, SearchActivity.class);
-            startActivity(intent);
-            finish();
-
-        } else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            // handles a search query  Intent.ACTION_SEARCH这个Intent是在当我点击系统的搜索框右面的按钮时触发的
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            intent.setClass(this, SearchActivity.class);
-            startActivity(intent);
-            finish();
+    public void showResult(List<ToDo> data, String word) {
+        if (data.isEmpty()) {
+            hintSearch.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+            linearLayout.setVisibility(View.VISIBLE);
+            showResult.setText(word + "无任务");
+            addTodo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(SearchActivity.this, AddToDoActivity.class));
+                    finish();
+                }
+            });
+        } else {
+            linearLayout.setVisibility(View.GONE);
+            hintSearch.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+            if (!adapter.isEmpty()) {
+                adapter.clear();
+            }
+            adapter.addData(data);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(adapter);
+            hintSearch.setText("搜索" + "\"" + word + "\"");
         }
+
     }
 
     @Override
@@ -60,16 +95,25 @@ public class SearchActivity extends BaseActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setQueryHint("搜索");
         searchView.setIconifiedByDefault(true);
+        searchView.setEnabled(true);
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                ArrayList<ToDo> data = (ArrayList<ToDo>) ToDoModel.getInstance().queryFromDB("Title = ? OR Content = ?", new String[]{query});
+                showResult(data, query);
+                return true;
+            }
 
-        onSearchRequested();
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<ToDo> data = (ArrayList<ToDo>) ToDoModel.getInstance().queryFromDB("Title = ? OR Content = ?", new String[]{newText});
+                showResult(data, newText);
+                return true;
+            }
+        });
 
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        return false;
-    }
 }

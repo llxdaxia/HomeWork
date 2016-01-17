@@ -17,6 +17,7 @@ import java.util.List;
 import cn.alien95.homework.R;
 import cn.alien95.homework.model.ToDoModel;
 import cn.alien95.homework.model.bean.ToDo;
+import cn.alien95.homework.utils.TimeTransform;
 
 /**
  * Created by linlongxin on 2016/1/7.
@@ -24,7 +25,6 @@ import cn.alien95.homework.model.bean.ToDo;
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder> {
 
     private List<ToDo> toDoList = new ArrayList<>();
-    private Context context;
 
     @Override
     public ToDoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,13 +41,19 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         return toDoList.size();
     }
 
-    public void setData(List<ToDo> list) {
+    public void addData(List<ToDo> list) {
         toDoList.addAll(list);
         notifyDataSetChanged();
     }
 
     public void clear() {
         toDoList.clear();
+    }
+
+    public boolean isEmpty() {
+        if (toDoList.isEmpty()) {
+            return true;
+        } else return false;
     }
 
     class ToDoViewHolder extends RecyclerView.ViewHolder {
@@ -67,7 +73,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         public void setData(final ToDo object) {
             title.setText(object.getTitle());
             content.setText(object.getContent());
-            time.setText(object.getTime() + "");
+            time.setText(TimeTransform.getInstance().transformRecentDate(object.getTime()));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -85,7 +91,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                     builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ToDoModel.deleteDataFromDB(object);
+                            ToDoModel.getInstance().deleteDataFromDB(object);
                             toDoList.remove(object);
                             notifyDataSetChanged();
                         }
