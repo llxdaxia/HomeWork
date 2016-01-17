@@ -23,7 +23,7 @@ public class AddToDoActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_todo);
+        setContentView(R.layout.todolist_activity_add_todo);
         setToolbarIsBack(true);
         title = (EditText) findViewById(R.id.title);
         content = (EditText) findViewById(R.id.content);
@@ -41,7 +41,7 @@ public class AddToDoActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_todo, menu);
+        getMenuInflater().inflate(R.menu.activity_add_todo, menu);
         return true;
     }
 

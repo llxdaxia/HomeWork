@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -35,13 +36,13 @@ public class ToDoListActivity extends BaseActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_todolist);
+        setContentView(R.layout.todolist_activity_todolist);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ToDoListActivity.this,AddToDoActivity.class));
+                startActivity(new Intent(ToDoListActivity.this, AddToDoActivity.class));
             }
         });
 
@@ -78,19 +79,32 @@ public class ToDoListActivity extends BaseActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_todolist, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.search) {
+            startActivity(new Intent(this, SearchActivity.class));
+        }
+        return true;
+    }
+
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
         switch (itemId) {
             case R.id.to_do_list:
-
+                drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.weather:
                 startActivity(new Intent(this, WeatherActivity.class));
                 break;
 
         }
-        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 }

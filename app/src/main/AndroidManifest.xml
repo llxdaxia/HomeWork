@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.alien95.homework">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:name=".app.App"
@@ -20,9 +20,23 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".moudel.weather.WeatherActivity"/>
+        <activity
+            android:name=".moudel.weather.WeatherActivity"
+            android:label="天气" />
 
-        <activity android:name=".moudel.todolist.AddToDoActivity"/>
+        <activity android:name=".moudel.todolist.AddToDoActivity" />
+
+        <activity
+            android:name=".moudel.todolist.SearchActivity"
+            android:label="搜索">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+
 
     </application>
 

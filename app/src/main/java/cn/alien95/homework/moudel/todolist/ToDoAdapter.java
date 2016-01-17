@@ -28,7 +28,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
 
     @Override
     public ToDoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ToDoViewHolder(parent.getContext(), R.layout.item_todo);
+        return new ToDoViewHolder(parent.getContext(), R.layout.todolist_item_todo);
     }
 
     @Override
