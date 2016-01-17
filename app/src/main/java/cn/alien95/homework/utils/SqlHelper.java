@@ -39,7 +39,7 @@ public class SqlHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql;
         for (TableName table : TableName.values()) {
-            sql = "create table if not exists " + table + " (Id integer NOT NULL AUTO_INCREMENT, Title varchar(32) NOT NULL, " +
+            sql = "create table if not exists " + table + " (Id integer AUTO_INCREMENT, Title varchar(32) NOT NULL, " +
                     "Content varchar(500) NOT NULL, Time long NOT NULL,PRIMARY KEY (Id))";
             db.execSQL(sql);
         }

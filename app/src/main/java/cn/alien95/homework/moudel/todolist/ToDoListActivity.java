@@ -55,7 +55,6 @@ public class ToDoListActivity extends BaseActivity
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ToDoAdapter();
@@ -87,7 +86,7 @@ public class ToDoListActivity extends BaseActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.search) {
-            startActivity(new Intent(this, SearchActivity.class));
+            startActivity(new Intent(this,SearchActivity.class));
         }
         return true;
     }
