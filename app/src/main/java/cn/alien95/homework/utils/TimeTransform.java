@@ -90,7 +90,7 @@ public class TimeTransform {
     public String transformRecentDate(long milliseconds) {
         long currentMilliseconds = System.currentTimeMillis();
         long timeDistance = currentMilliseconds - milliseconds;
-        if (timeDistance < 1) {
+        if (timeDistance < 1000) {
             return "刚刚";
         } else if (timeDistance > 0) {  //过去的时间
             if (timeDistance / 1000 < 60) {

@@ -1,5 +1,6 @@
 package cn.alien95.homework.moudel.todolist;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,8 +42,23 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         return toDoList.size();
     }
 
-    public void addData(List<ToDo> list) {
+    public void add(ToDo toDo){
+        toDoList.add(toDo);
+        notifyDataSetChanged();
+    }
+
+    public void addToFirst(ToDo toDo){
+        toDoList.add(0,toDo);
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<ToDo> list) {
         toDoList.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void remove(ToDo toDo){
+        toDoList.remove(toDo);
         notifyDataSetChanged();
     }
 
@@ -79,7 +95,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), AddToDoActivity.class);
                     intent.putExtra(ToDoListActivity.UPDATE_DATA, object);
-                    v.getContext().startActivity(intent);
+                    ((Activity)v.getContext()).startActivityForResult(intent,ToDoListActivity.REQUEST_CODE_ADD);
                 }
             });
 

@@ -32,6 +32,7 @@ import cn.alien95.homework.moudel.weather.WeatherActivity;
 public class ToDoListActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final int REQUEST_CODE_ADD = 100;
     public static final String UPDATE_DATA = "UPDATE_DATA";
     public static final String INTENT_DATA = "INTENT_DATA";
     public static final String SEARCH_WORD = "SEARCH_WORD";
@@ -51,7 +52,7 @@ public class ToDoListActivity extends BaseActivity
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ToDoListActivity.this, AddToDoActivity.class));
+                startActivityForResult(new Intent(ToDoListActivity.this, AddToDoActivity.class), REQUEST_CODE_ADD);
             }
         });
 
@@ -68,14 +69,7 @@ public class ToDoListActivity extends BaseActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ToDoAdapter();
         recyclerView.setAdapter(adapter);
-        adapter.addData(ToDoModel.getInstance().getDataFromDB());
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        adapter.clear();
-        adapter.addData(ToDoModel.getInstance().getDataFromDB());
+        adapter.addAll(ToDoModel.getInstance().getDataFromDB());
     }
 
     @Override
@@ -84,6 +78,15 @@ public class ToDoListActivity extends BaseActivity
             drawerLayout.closeDrawer(GravityCompat.START);
         } else
             super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_ADD && resultCode == AddToDoActivity.RESULT_CODE_MODIFY_OR_ADD){
+            adapter.clear();
+            adapter.addAll(ToDoModel.getInstance().getDataFromDB());
+        }
     }
 
     @Override

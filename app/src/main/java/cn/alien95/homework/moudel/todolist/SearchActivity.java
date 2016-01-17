@@ -78,7 +78,7 @@ public class SearchActivity extends BaseActivity {
             if (!adapter.isEmpty()) {
                 adapter.clear();
             }
-            adapter.addData(data);
+            adapter.addAll(data);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);
             hintSearch.setText("搜索" + "\"" + word + "\"");
