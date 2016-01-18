@@ -12,5 +12,8 @@
             android:title="Weather" />
     </group>
 
+    <item
+        android:id="@+id/about_app"
+        android:title="About App" />
 
 </menu>

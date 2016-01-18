@@ -50,13 +50,16 @@ public class ToDoModel extends Model {
         return db.update(String.valueOf(SqlHelper.TableName.TODO_TABLE), contentValues, "Id = ?", new String[]{object.getId() + ""});
     }
 
-    public List<ToDo> queryFromDB(String whereClause, String[] whereArgs) {
+    //查询数据
+    public List<ToDo> queryFromDB(String whereClause, String[] whereArgs,
+                                  String groupBy, String having,
+                                  String orderBy) {
         db = SqlHelper.getInstance().getReadableDatabase();
         Cursor cursor = db.query(String.valueOf(SqlHelper.TableName.TODO_TABLE),
                 null,
                 whereClause,
                 whereArgs,
-                null, null, null);
+                groupBy, having, orderBy);
         cursor.moveToFirst();
 
         List<ToDo> toDoList = new ArrayList<ToDo>(cursor.getCount());
@@ -74,9 +77,10 @@ public class ToDoModel extends Model {
         return toDoList;
     }
 
-    //查询数据
+    //通过时间降序排序过去TODOLIST列表
     public List<ToDo> getDataFromDB() {
-        return queryFromDB(null, null);
+        String timeOrder = "Time DESC";
+        return queryFromDB(null, null,null,null,timeOrder);
     }
 
 }

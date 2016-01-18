@@ -95,20 +95,27 @@ public class SearchActivity extends BaseActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setQueryHint("搜索");
         searchView.setIconifiedByDefault(true);
-        searchView.setEnabled(true);
+        searchView.setFocusableInTouchMode(true);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                ArrayList<ToDo> data = (ArrayList<ToDo>) ToDoModel.getInstance().queryFromDB("Title = ? OR Content = ?", new String[]{query});
+                ArrayList<ToDo> data = (ArrayList<ToDo>) ToDoModel.getInstance()
+                        .queryFromDB("Title LIKE ? OR Content LIKE ?", new String[]{"%" + query + "%", "%" + query + "%"},
+                                null, null, null);
                 showResult(data, query);
+
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<ToDo> data = (ArrayList<ToDo>) ToDoModel.getInstance().queryFromDB("Title = ? OR Content = ?", new String[]{newText});
-                showResult(data, newText);
+                if (!newText.isEmpty()) {
+                    ArrayList<ToDo> data = (ArrayList<ToDo>) ToDoModel.getInstance()
+                            .queryFromDB("Title LIKE ? OR Content LIKE ?", new String[]{"%" + newText + "%", "%" + newText + "%"},
+                                    null, null, null);
+                    showResult(data, newText);
+                }
                 return true;
             }
         });

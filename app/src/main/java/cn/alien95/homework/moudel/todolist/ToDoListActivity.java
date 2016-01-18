@@ -24,6 +24,7 @@ import cn.alien95.homework.R;
 import cn.alien95.homework.app.BaseActivity;
 import cn.alien95.homework.model.ToDoModel;
 import cn.alien95.homework.model.bean.ToDo;
+import cn.alien95.homework.moudel.about.AboutActivity;
 import cn.alien95.homework.moudel.weather.WeatherActivity;
 
 /**
@@ -83,7 +84,7 @@ public class ToDoListActivity extends BaseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE_ADD && resultCode == AddToDoActivity.RESULT_CODE_MODIFY_OR_ADD){
+        if (requestCode == REQUEST_CODE_ADD && resultCode == AddToDoActivity.RESULT_CODE_MODIFY_OR_ADD) {
             adapter.clear();
             adapter.addAll(ToDoModel.getInstance().getDataFromDB());
         }
@@ -98,12 +99,13 @@ public class ToDoListActivity extends BaseActivity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setQueryHint("搜索");
         searchView.setIconifiedByDefault(true);
-        searchView.setEnabled(true);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                ArrayList<ToDo> data = (ArrayList<ToDo>) ToDoModel.getInstance().queryFromDB("Title = ? OR Content = ?", new String[]{query});
+                ArrayList<ToDo> data = (ArrayList<ToDo>) ToDoModel.getInstance().
+                        queryFromDB("Title LIKE ? OR Content LIKE ?", new String[]{"%" + query + "%", "%" + query + "%"},
+                                null, null, null);
                 Intent intent = new Intent();
                 intent.putExtra(INTENT_DATA, data);
                 intent.putExtra(SEARCH_WORD, query);
@@ -132,6 +134,9 @@ public class ToDoListActivity extends BaseActivity
                 break;
             case R.id.weather:
                 startActivity(new Intent(this, WeatherActivity.class));
+                break;
+            case R.id.about_app:
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
 
         }
