@@ -7,7 +7,7 @@ public class Model {
 
     public static Model instance;
 
-    public static<T extends Model> Model getInstance(Class model) {
+    protected static<T extends Model> Model getInstance(Class model) {
         try {
             instance = (T) model.newInstance();
         } catch (InstantiationException e) {

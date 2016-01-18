@@ -25,6 +25,7 @@ import cn.alien95.homework.app.BaseActivity;
 import cn.alien95.homework.model.ToDoModel;
 import cn.alien95.homework.model.bean.ToDo;
 import cn.alien95.homework.moudel.about.AboutActivity;
+import cn.alien95.homework.moudel.postman.PostManActivity;
 import cn.alien95.homework.moudel.weather.WeatherActivity;
 
 /**
@@ -134,6 +135,9 @@ public class ToDoListActivity extends BaseActivity
                 break;
             case R.id.weather:
                 startActivity(new Intent(this, WeatherActivity.class));
+                break;
+            case R.id.post_man:
+                startActivity(new Intent(this, PostManActivity.class));
                 break;
             case R.id.about_app:
                 startActivity(new Intent(this, AboutActivity.class));

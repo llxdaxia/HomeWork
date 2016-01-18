@@ -28,7 +28,7 @@
             android:layout_marginTop="16dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Display4"
             android:text="添加一个任务&#160;"
-            android:drawableRight="@drawable/ic_origin_add"/>
+            android:drawableRight="@drawable/ic_orange_add"/>
     </LinearLayout>
 
     <TextView android:id="@+id/hint_search"

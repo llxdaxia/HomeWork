@@ -24,7 +24,6 @@ import cn.alien95.homework.R;
 import cn.alien95.homework.app.BaseActivity;
 import cn.alien95.homework.model.ToDoModel;
 import cn.alien95.homework.model.bean.ToDo;
-import cn.alien95.homework.utils.Utils;
 
 /**
  * Created by linlongxin on 2016/1/17.
@@ -52,7 +51,6 @@ public class SearchActivity extends BaseActivity {
         setToolbarIsBack(true);
 
         data = (List<ToDo>) getIntent().getSerializableExtra(ToDoListActivity.INTENT_DATA);
-        Utils.Log("data:" + (data.isEmpty()));
         adapter = new ToDoAdapter();
         showResult(data, getIntent().getStringExtra(ToDoListActivity.SEARCH_WORD));
 

@@ -5,7 +5,9 @@ package cn.alien95.homework.config;
  */
 public class API {
 
-    public static final String WEATHER_KEY = "CiTRHjTGm0KKvqWqT0SFDwC0";
-    public static final String WEATHER_BASE_URL = "http://api.map.baidu.com/telematics/v3/weather?location=北京&output=json&ak=" + WEATHER_KEY;
+    public static final String WEATHER_KEY = "b57a57e54732bf5c5b020302ae05b8cb";
+    public static final String WEATHER_BASE_URL = "http://v.juhe.cn/weather/index?format=2&";
+
+    public static final String WEATHER_BG_IMG = "http://alien95.cn/img/bg.jpg";
 
 }

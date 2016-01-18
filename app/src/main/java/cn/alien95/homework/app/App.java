@@ -20,12 +20,11 @@ public class App extends Application {
         SqlHelper.init(this, "HomeWork");  //初始化数据库
         Utils.init(this);
         Utils.setDebugtag("HomeWork");
+
         //set 初始化
         AlienSet.init(this);
         if (BuildConfig.DEBUG) {
             HttpRequest.setDebug(true, "NetWork");
         }
-
-
     }
 }

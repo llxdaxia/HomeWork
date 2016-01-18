@@ -11,6 +11,10 @@ public class SqlHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
 
+    private static String DATABASE_NAME;
+
+    private static Context mContext;
+
     private static SqlHelper instance;
 
     public enum TableName {
@@ -29,6 +33,8 @@ public class SqlHelper extends SQLiteOpenHelper {
 
     public static void init(Context context, String dataBaseName) {
         instance = new SqlHelper(context, dataBaseName);
+        DATABASE_NAME = dataBaseName;
+        mContext = context;
     }
 
     public static SqlHelper getInstance() {
@@ -39,8 +45,8 @@ public class SqlHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql;
         for (TableName table : TableName.values()) {
-            sql = "create table if not exists " + table + "Id integer PRIMARY KEY AUTOINCREMENT, Title varchar(32) NOT NULL UNIQUE, " +
-                    "Content varchar(500) NOT NULL, Time long NOT NULL";
+            sql = "create table if NOT EXISTS " + table + " (Id INTEGER PRIMARY KEY AUTOINCREMENT, Title varchar(32) NOT NULL UNIQUE, " +
+                    "Content varchar(500) NOT NULL, Time long NOT NULL)";
             db.execSQL(sql);
         }
     }
@@ -56,6 +62,10 @@ public class SqlHelper extends SQLiteOpenHelper {
             onCreate(db);
         }
 
+    }
+
+    public void clearDataBase() {
+        mContext.deleteDatabase(DATABASE_NAME);
     }
 
 }
