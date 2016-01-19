@@ -80,7 +80,12 @@ public class ToDoModel extends Model {
     //通过时间降序排序过去TODOLIST列表
     public List<ToDo> getDataFromDB() {
         String timeOrder = "Time DESC";
-        return queryFromDB(null, null,null,null,timeOrder);
+        return queryFromDB(null, null, null, null, timeOrder);
+    }
+
+    public boolean clearDataFromDataBase() {
+        db = SqlHelper.getInstance().getWritableDatabase();
+        return db.delete(String.valueOf(SqlHelper.TableName.TODO_TABLE), null, null) > 0;
     }
 
 }

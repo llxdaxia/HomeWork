@@ -9,8 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class SqlHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
-
     private static String DATABASE_NAME;
 
     private static Context mContext;
@@ -28,7 +26,7 @@ public class SqlHelper extends SQLiteOpenHelper {
     }
 
     private SqlHelper(Context context, String dataBaseName) {
-        super(context, dataBaseName, null, DATABASE_VERSION);
+        super(context, dataBaseName, null, cn.alien95.set.util.Utils.getAppVersion());
     }
 
     public static void init(Context context, String dataBaseName) {
@@ -64,8 +62,9 @@ public class SqlHelper extends SQLiteOpenHelper {
 
     }
 
-    public void clearDataBase() {
-        mContext.deleteDatabase(DATABASE_NAME);
+    public boolean deleteDataBase() {
+        return mContext.deleteDatabase(DATABASE_NAME);
     }
+
 
 }

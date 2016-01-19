@@ -30,7 +30,6 @@ import cn.alien95.homework.moudel.about.AboutActivity;
 import cn.alien95.homework.moudel.postman.PostManActivity;
 import cn.alien95.homework.moudel.weather.WeatherActivity;
 import cn.alien95.homework.utils.MessageNotify;
-import cn.alien95.homework.utils.SqlHelper;
 import cn.alien95.homework.utils.Utils;
 
 /**
@@ -177,8 +176,15 @@ public class ToDoListActivity extends BaseActivity
                 startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.clear_data:
-                SqlHelper.getInstance().clearDataBase();
-                Utils.SackbarShort(navigationView,"已清理");
+                if (ToDoModel.getInstance().clearDataFromDataBase()) {
+                    Utils.SackbarLong(navigationView, "已清理", "添加", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            drawerLayout.closeDrawer(GravityCompat.START);
+                        }
+                    });
+                    MessageNotify.getInstance().sendMessage();
+                } else Utils.SackbarShort(navigationView, "清理失败");
                 break;
 
         }
