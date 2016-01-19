@@ -2,6 +2,8 @@ package cn.alien95.set.entrance;
 
 import android.content.Context;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 import cn.alien95.set.http.image.ImageUtils;
 import cn.alien95.set.util.Utils;
 
@@ -13,5 +15,6 @@ public class AlienSet {
     public static void init(Context context){
         Utils.initialize(context);
         ImageUtils.init(context);
+        Fresco.initialize(context);
     }
 }
