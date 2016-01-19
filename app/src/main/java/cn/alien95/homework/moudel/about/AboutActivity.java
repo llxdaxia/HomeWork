@@ -34,6 +34,7 @@ public class AboutActivity extends BaseActivity {
                 + "2,网络获取图片，图片的优化，通过对这些的学习，自己摸索去写一些请求工具。\n\n"
         +"PostMan 继续学习网络\n"
         +"1，请求头设置\n"
-        +"2，请求参数设置\n");
+        +"2，请求参数设置\n\n"
+        +"源码地址：https://github.com/llxdaxia/HomeWork");
     }
 }

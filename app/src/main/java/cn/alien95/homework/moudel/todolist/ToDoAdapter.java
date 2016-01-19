@@ -18,6 +18,7 @@ import java.util.List;
 import cn.alien95.homework.R;
 import cn.alien95.homework.model.ToDoModel;
 import cn.alien95.homework.model.bean.ToDo;
+import cn.alien95.homework.utils.MessageNotify;
 import cn.alien95.homework.utils.TimeTransform;
 
 /**
@@ -110,9 +111,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                             ToDoModel.getInstance().deleteDataFromDB(object);
                             toDoList.remove(object);
                             notifyDataSetChanged();
-                            if(isEmpty()){
-
-                            }
+                            MessageNotify.getInstance().sendMessage();
                         }
                     });
                     builder.setNegativeButton("否", null);

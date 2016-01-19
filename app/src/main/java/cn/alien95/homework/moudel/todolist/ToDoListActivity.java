@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import cn.alien95.homework.R;
@@ -28,6 +29,9 @@ import cn.alien95.homework.model.bean.ToDo;
 import cn.alien95.homework.moudel.about.AboutActivity;
 import cn.alien95.homework.moudel.postman.PostManActivity;
 import cn.alien95.homework.moudel.weather.WeatherActivity;
+import cn.alien95.homework.utils.MessageNotify;
+import cn.alien95.homework.utils.SqlHelper;
+import cn.alien95.homework.utils.Utils;
 
 /**
  * Created by linlongxin on 2016/1/5.
@@ -79,6 +83,16 @@ public class ToDoListActivity extends BaseActivity
         if (adapter.isEmpty()) {
             showEmpty();
         }
+
+        //item被删除的时候，需要通过类似EventBus一样的操作解决
+        try {
+            Method method = ToDoListActivity.class.getMethod("showEmpty", new Class<?>[]{});
+            MessageNotify.getInstance().registerEvent(this, method);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public void showEmpty() {
@@ -161,6 +175,10 @@ public class ToDoListActivity extends BaseActivity
                 break;
             case R.id.about_app:
                 startActivity(new Intent(this, AboutActivity.class));
+                break;
+            case R.id.clear_data:
+                SqlHelper.getInstance().clearDataBase();
+                Utils.SackbarShort(navigationView,"已清理");
                 break;
 
         }

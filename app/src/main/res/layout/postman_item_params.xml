@@ -4,39 +4,59 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:textColor="#547df4"
-        android:text="Key"
-        android:textSize="16sp" />
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/key"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:textColor="#547df4"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/key_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/key"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Key：   "
+            android:textColor="#819ff5"
+            android:textSize="14sp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:textColor="#547df4"
-        android:text="Value"
-        android:textSize="16sp" />
+        <EditText
+            android:id="@+id/key"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@+id/key_flag"
+            android:textColor="#547df4"
+            android:textSize="14sp" />
 
-    <EditText
-        android:id="@+id/value"
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:textColor="#547df4"
-        android:textSize="16sp" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/value_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/value"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Value："
+            android:textColor="#819ff5"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@+id/value_flag"
+            android:textColor="#547df4"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
 
 </LinearLayout>

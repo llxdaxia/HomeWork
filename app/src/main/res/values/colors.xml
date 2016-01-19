@@ -6,7 +6,7 @@
 
     <color name="divider">@color/grey</color>
     
-    <color name="amber">#FFC107</color>
+    <color name="amber">#f9be0f</color>
     <color name="orange">#FF5722</color>
     <color name="deep_orange">#e64a19</color>
     <color name="light_orange">#ccFF5722</color>

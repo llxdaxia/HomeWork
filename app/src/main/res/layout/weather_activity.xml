@@ -36,7 +36,6 @@
                     android:gravity="center"
                     android:textSize="20sp"
                     android:textColor="@android:color/background_light"
-                    android:textStyle="bold"
                     tools:text="海棠溪" />
 
                 <TextView
@@ -93,6 +92,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="96sp"
                         android:textColor="@android:color/background_light"
+                        android:typeface="serif"
                         tools:text="20℃" />
 
                 </LinearLayout>

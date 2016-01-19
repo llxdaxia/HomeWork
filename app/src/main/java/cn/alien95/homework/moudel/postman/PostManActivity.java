@@ -15,6 +15,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +26,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.alien95.homework.R;
 import cn.alien95.homework.app.BaseActivity;
+import cn.alien95.homework.utils.Utils;
 import cn.alien95.set.http.request.HttpCallBack;
 import cn.alien95.set.http.request.HttpRequest;
 
@@ -82,11 +86,13 @@ public class PostManActivity extends BaseActivity {
         addParams.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < linearLayoutParams.getChildCount(); i++) {
-                    if (!collectParamsOrHeader(linearLayoutParams, i, paramsMap))
-                        return;
+                if (radioGroup.getCheckedRadioButtonId() == R.id.post) {
+                    for (int i = 0; i < linearLayoutParams.getChildCount(); i++) {
+                        if (!collectParamsOrHeader(linearLayoutParams, i, paramsMap))
+                            return;
+                    }
+                    addItem(linearLayoutParams);
                 }
-                addItem(linearLayoutParams);
             }
         });
 
@@ -104,7 +110,7 @@ public class PostManActivity extends BaseActivity {
 
     public boolean collectParamsOrHeader(LinearLayout linearLayout, int childIndex, Map<String, String> map) {
         View child = linearLayout.getChildAt(childIndex);
-        if(child == null) return false;
+        if (child == null) return false;
         key = (EditText) child.findViewById(R.id.key);
         value = (EditText) child.findViewById(R.id.value);
         String keyStr = key.getText().toString();
@@ -129,34 +135,59 @@ public class PostManActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
 
-        collectParamsOrHeader(linearLayoutHeader, linearLayoutHeader.getChildCount() - 1, headerMap);
-        if (!headerMap.isEmpty()) {
-            HttpRequest.getInstance().setHttpHeader(headerMap);
-        }
         if (item.getItemId() == R.id.send) {
-            //POST请求
-            collectParamsOrHeader(linearLayoutParams, linearLayoutParams.getChildCount() - 1, paramsMap);
+            if (httpUrl.getText().toString().isEmpty()) {
+                Utils.SackbarShort(httpUrl, "URL不能为空");
+                return true;
+            }
+            showProgressBar("正在请求网络...");
+            //header
+            collectParamsOrHeader(linearLayoutHeader, linearLayoutHeader.getChildCount() - 1, headerMap);
+            if (!headerMap.isEmpty()) {
+                HttpRequest.getInstance().setHttpHeader(headerMap);
+            }
+
+            for (Map.Entry<String, String> entry : headerMap.entrySet()) {
+                Utils.Log("header:" + entry.getKey() + "   " + entry.getValue());
+            }
+
             if (radioGroup.getCheckedRadioButtonId() == R.id.post) {
+                //POST请求
+                Utils.Log("post请求:");
+                collectParamsOrHeader(linearLayoutParams, linearLayoutParams.getChildCount() - 1, paramsMap);
+
+                for (Map.Entry<String, String> entry : paramsMap.entrySet()) {
+                    Utils.Log("params:" + entry.getKey() + "   " + entry.getValue());
+                }
+
                 HttpRequest.getInstance().post(httpUrl.getText().toString(),
                         paramsMap, new HttpCallBack() {
                             @Override
                             public void success(String info) {
-                                Gson gson = new Gson();
-                                result.setText(gson.toJson(info));
+                                result.setText(jsonFormatter(info));
+                                dismissProgressBar();
                             }
                         });
             } else {
                 //GET请求
+                Utils.Log("get请求。");
                 HttpRequest.getInstance().get(httpUrl.getText().toString(),
                         new HttpCallBack() {
                             @Override
                             public void success(String info) {
-                                Gson gson = new Gson();
-                                result.setText(gson.toJson(info));
+                                result.setText(jsonFormatter(info));
+                                dismissProgressBar();
                             }
                         });
             }
         }
         return true;
+    }
+
+    public String jsonFormatter(String uglyJSONString) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonParser jp = new JsonParser();
+        JsonElement je = jp.parse(uglyJSONString);
+        return gson.toJson(je);
     }
 }

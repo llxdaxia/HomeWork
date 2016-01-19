@@ -16,9 +16,9 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="无任务，请添加"
-        android:textColor="#adb0b3"
+        android:textColor="#b4b4b4"
         android:textSize="24sp"
-        android:textStyle="bold"
+        android:typeface="serif"
         android:visibility="gone" />
 
 </LinearLayout>
