@@ -110,6 +110,9 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                             ToDoModel.getInstance().deleteDataFromDB(object);
                             toDoList.remove(object);
                             notifyDataSetChanged();
+                            if(isEmpty()){
+
+                            }
                         }
                     });
                     builder.setNegativeButton("否", null);

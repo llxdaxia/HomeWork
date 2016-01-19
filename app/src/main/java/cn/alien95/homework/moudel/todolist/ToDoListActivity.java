@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -44,11 +45,12 @@ public class ToDoListActivity extends BaseActivity
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private ToDoAdapter adapter;
+    private TextView empty;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.todolist_activity_todolist);
+        setContentView(R.layout.todolist_activity);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
@@ -67,11 +69,26 @@ public class ToDoListActivity extends BaseActivity
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        empty = (TextView) findViewById(R.id.empty);
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ToDoAdapter();
-        recyclerView.setAdapter(adapter);
         adapter.addAll(ToDoModel.getInstance().getDataFromDB());
+        recyclerView.setAdapter(adapter);
+        if (adapter.isEmpty()) {
+            showEmpty();
+        }
+    }
+
+    public void showEmpty() {
+        recyclerView.setVisibility(View.GONE);
+        empty.setVisibility(View.VISIBLE);
+    }
+
+    public void showRecyclerView() {
+        recyclerView.setVisibility(View.VISIBLE);
+        empty.setVisibility(View.GONE);
     }
 
     @Override
@@ -88,6 +105,9 @@ public class ToDoListActivity extends BaseActivity
         if (requestCode == REQUEST_CODE_ADD && resultCode == AddToDoActivity.RESULT_CODE_MODIFY_OR_ADD) {
             adapter.clear();
             adapter.addAll(ToDoModel.getInstance().getDataFromDB());
+            if (!adapter.isEmpty()) {
+                showRecyclerView();
+            }
         }
     }
 
