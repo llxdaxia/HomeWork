@@ -36,24 +36,28 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showProgressBar(String title) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LinearLayout linearLayout = new LinearLayout(this);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
-        TextView text = new TextView(this);
-        text.setText(title);
-        text.setTextColor(getResources().getColor(R.color.colorPrimary));
-        text.setTextSize(16);
-        text.setPadding(Utils.dip2px(16), Utils.dip2px(16), Utils.dip2px(16), Utils.dip2px(16));
-        ProgressBar progressBar = new ProgressBar(this);
-        linearLayout.addView(text);
-        linearLayout.addView(progressBar);
-        builder.setView(linearLayout);
-        dialog = builder.create();
+        if (dialog == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            LinearLayout linearLayout = new LinearLayout(this);
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            linearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
+            TextView text = new TextView(this);
+            text.setText(title);
+            text.setTextColor(getResources().getColor(R.color.colorPrimary));
+            text.setTextSize(16);
+            text.setPadding(Utils.dip2px(16), Utils.dip2px(16), Utils.dip2px(16), Utils.dip2px(16));
+            ProgressBar progressBar = new ProgressBar(this);
+            linearLayout.addView(text);
+            linearLayout.addView(progressBar);
+            builder.setView(linearLayout);
+            dialog = builder.create();
+        }
         dialog.show();
+
     }
 
     public void dismissProgressBar() {
+        if(dialog != null)
         dialog.dismiss();
     }
 

@@ -72,7 +72,7 @@
                         android:id="@+id/weather"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
+                        android:layout_marginLeft="8dp"
                         android:textSize="20sp"
                         android:textColor="@android:color/background_light"
                         tools:text="多云" />
@@ -81,7 +81,7 @@
                         android:id="@+id/range_temperature"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
+                        android:layout_marginLeft="8dp"
                         android:textSize="16sp"
                         android:textColor="@android:color/background_light"
                         tools:text="8℃~20℃" />
