@@ -17,16 +17,17 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        cn.alien95.set.util.Utils.initialize(this);  //必须在前面，有先后关系
+        //set 初始化
+        AlienSet.init(this);
+        AlienSet.setDebug(true, "HomeWork");
+        if (BuildConfig.DEBUG) {
+            HttpRequest.setDebug(true, "NetWork");
+        }
+
         SqlHelper.init(this, "HomeWork");  //初始化数据库
         Utils.init(this);
         Utils.setDebugtag("HomeWork");
 
 
-        //set 初始化
-        AlienSet.init(this);
-        if (BuildConfig.DEBUG) {
-            HttpRequest.setDebug(true, "NetWork");
-        }
     }
 }

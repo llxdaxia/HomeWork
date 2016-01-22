@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * Created by linlongxin on 2016/1/19.
+ * 在两个没有任何联系的类里面实现通讯，类似EventBus
  */
 public class MessageNotify {
 
@@ -28,6 +29,7 @@ public class MessageNotify {
         return instance;
     }
 
+    //
     public void registerEvent(Context context, Method method) {
         map.put(context, method);
     }
