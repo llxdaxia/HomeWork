@@ -10,7 +10,7 @@
 
 - 要点是网络请求，主要掌握get，post。 
 
-学习HttpUrlConnection类，通过百度，谷歌自己去学习和写一些请求。
+主要学习HttpUrlConnection类，通过百度，谷歌自己去学习和写一些请求。
 
 ###3.天气
 
@@ -19,3 +19,5 @@
 
 主要也是网络请求，有了postman的基础后，主要就是添加了更多的ui。  
 [天气预报接口网址](http://www.heweather.com)
+
+[网络](https://github.com/llxdaxia/Http)
