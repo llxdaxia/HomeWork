@@ -6,6 +6,9 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import alien95.cn.http.request.HttpCallBack;
+import alien95.cn.http.view.HttpImageView;
+import alien95.cn.util.TimeTransform;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.alien95.homework.R;
@@ -13,9 +16,6 @@ import cn.alien95.homework.app.BaseActivity;
 import cn.alien95.homework.config.API;
 import cn.alien95.homework.model.WeatherModel;
 import cn.alien95.homework.model.bean.WeatherData;
-import cn.alien95.homework.utils.TimeTransform;
-import cn.alien95.set.http.request.HttpCallBack;
-import cn.alien95.set.widget.HttpImageView;
 
 /**
  * Created by linlongxin on 2016/1/5.

@@ -7,11 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import alien95.cn.util.Utils;
 import cn.alien95.homework.R;
 import cn.alien95.homework.app.BaseActivity;
 import cn.alien95.homework.model.ToDoModel;
 import cn.alien95.homework.model.bean.ToDo;
-import cn.alien95.homework.utils.Utils;
 
 /**
  * Created by linlongxin on 2016/1/15.
@@ -60,7 +60,7 @@ public class AddToDoActivity extends BaseActivity {
                 int result = ToDoModel.getInstance().updateDataFromDB(object = new ToDo(todo.getId(), titleStr, contentStr, System.currentTimeMillis()));
                 if (result == 0) {
                     if (titleStr.isEmpty() || contentStr.isEmpty()) {
-                        Utils.SackbarShort(title, "标题或内容不能为空");
+                        Utils.SnackbarShort(title, "标题或内容不能为空");
                     } else {
                         Utils.Toast("没有修改");
                     }
@@ -69,10 +69,10 @@ public class AddToDoActivity extends BaseActivity {
             } else {
                 long responseCode = ToDoModel.getInstance().insertDataToDB(object = new ToDo(titleStr, contentStr, System.currentTimeMillis()));
                 if (responseCode == 0) {
-                    Utils.SackbarShort(title, "标题或内容不能为空");
+                    Utils.SnackbarShort(title, "标题或内容不能为空");
                     return true;
                 } else if (responseCode == -1) {
-                    Utils.SackbarShort(title, "标题重复");
+                    Utils.SnackbarShort(title, "标题重复");
                     return true;
                 }
 

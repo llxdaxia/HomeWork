@@ -15,11 +15,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import alien95.cn.util.MessageNotify;
+import alien95.cn.util.TimeTransform;
 import cn.alien95.homework.R;
 import cn.alien95.homework.model.ToDoModel;
 import cn.alien95.homework.model.bean.ToDo;
-import cn.alien95.homework.utils.MessageNotify;
-import cn.alien95.homework.utils.TimeTransform;
 
 /**
  * Created by linlongxin on 2016/1/7.

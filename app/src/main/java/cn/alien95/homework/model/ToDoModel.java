@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import alien95.cn.util.SqlHelper;
 import cn.alien95.homework.model.bean.ToDo;
-import cn.alien95.homework.utils.SqlHelper;
 
 /**
  * Created by linlongxin on 2016/1/5.

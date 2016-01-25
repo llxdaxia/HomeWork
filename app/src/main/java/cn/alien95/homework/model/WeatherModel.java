@@ -3,9 +3,9 @@ package cn.alien95.homework.model;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import alien95.cn.http.request.HttpCallBack;
+import alien95.cn.http.request.HttpRequest;
 import cn.alien95.homework.config.API;
-import cn.alien95.set.http.request.HttpCallBack;
-import cn.alien95.set.http.request.HttpRequest;
 
 /**
  * Created by linlongxin on 2016/1/18.

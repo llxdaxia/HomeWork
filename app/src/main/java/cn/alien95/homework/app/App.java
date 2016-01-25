@@ -2,11 +2,9 @@ package cn.alien95.homework.app;
 
 import android.app.Application;
 
+import alien95.cn.http.request.HttpRequest;
+import alien95.cn.util.SqlHelper;
 import cn.alien95.homework.BuildConfig;
-import cn.alien95.homework.utils.SqlHelper;
-import cn.alien95.homework.utils.Utils;
-import cn.alien95.set.entrance.AlienSet;
-import cn.alien95.set.http.request.HttpRequest;
 
 /**
  * Created by linlongxin on 2016/1/5.
@@ -17,17 +15,12 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //set 初始化
-        AlienSet.init(this);
-        AlienSet.setDebug(true, "HomeWork");
         if (BuildConfig.DEBUG) {
+            alien95.cn.util.Utils.setDebug(true, "HomeWork");
             HttpRequest.setDebug(true, "NetWork");
         }
 
         SqlHelper.init(this, "HomeWork");  //初始化数据库
-        Utils.init(this);
-        Utils.setDebugtag("HomeWork");
-
 
     }
 }

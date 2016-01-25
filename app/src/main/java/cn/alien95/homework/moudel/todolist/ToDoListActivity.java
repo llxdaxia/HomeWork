@@ -22,6 +22,8 @@ import android.widget.TextView;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import alien95.cn.util.MessageNotify;
+import alien95.cn.util.Utils;
 import cn.alien95.homework.R;
 import cn.alien95.homework.app.BaseActivity;
 import cn.alien95.homework.model.ToDoModel;
@@ -29,8 +31,6 @@ import cn.alien95.homework.model.bean.ToDo;
 import cn.alien95.homework.moudel.about.AboutActivity;
 import cn.alien95.homework.moudel.postman.PostManActivity;
 import cn.alien95.homework.moudel.weather.WeatherActivity;
-import cn.alien95.homework.utils.MessageNotify;
-import cn.alien95.homework.utils.Utils;
 
 /**
  * Created by linlongxin on 2016/1/5.
@@ -133,6 +133,7 @@ public class ToDoListActivity extends BaseActivity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setQueryHint("搜索");
         searchView.setIconifiedByDefault(true);
+        searchView.setFocusableInTouchMode(true);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -177,14 +178,14 @@ public class ToDoListActivity extends BaseActivity
                 break;
             case R.id.clear_data:
                 if (ToDoModel.getInstance().clearDataFromDataBase()) {
-                    Utils.SackbarLong(navigationView, "已清理", "添加", new View.OnClickListener() {
+                    Utils.SnackbarLong(navigationView, "已清理", "添加", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             drawerLayout.closeDrawer(GravityCompat.START);
                         }
                     });
                     MessageNotify.getInstance().sendMessage();
-                } else Utils.SackbarShort(navigationView, "清理失败");
+                } else Utils.SnackbarShort(navigationView, "清理失败");
                 break;
 
         }

@@ -22,13 +22,13 @@ import com.google.gson.JsonParser;
 import java.util.HashMap;
 import java.util.Map;
 
+import alien95.cn.http.request.HttpCallBack;
+import alien95.cn.http.request.HttpRequest;
+import alien95.cn.util.Utils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.alien95.homework.R;
 import cn.alien95.homework.app.BaseActivity;
-import cn.alien95.homework.utils.Utils;
-import cn.alien95.set.http.request.HttpCallBack;
-import cn.alien95.set.http.request.HttpRequest;
 
 /**
  * Created by linlongxin on 2016/1/18.
@@ -137,7 +137,7 @@ public class PostManActivity extends BaseActivity {
 
         if (item.getItemId() == R.id.send) {
             if (httpUrl.getText().toString().isEmpty()) {
-                Utils.SackbarShort(httpUrl, "URL不能为空");
+                Utils.SnackbarShort(httpUrl, "URL不能为空");
                 return true;
             }
             showProgressBar("正在请求网络...");
