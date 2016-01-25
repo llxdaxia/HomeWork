@@ -11,8 +11,8 @@ android {
         applicationId "cn.alien95.homework"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.0.2"
+        versionCode 3
+        versionName "1.1.0"
     }
 
     signingConfigs {
@@ -44,6 +44,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'cn.alien95:http:1.0.3'   //地址：https://github.com/llxdaxia/Http
+    compile 'cn.alien95:http:1.0.4'   //地址：https://github.com/llxdaxia/Http
     compile 'com.google.code.gson:gson:2.5'
 }

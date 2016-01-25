@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alien95.cn.util.SqlHelper;
+import cn.alien95.homework.config.API;
 import cn.alien95.homework.model.bean.ToDo;
 
 /**
@@ -31,13 +32,13 @@ public class ToDoModel extends Model {
         content.put("Title", object.getTitle());
         content.put("Content", object.getContent());
         content.put("Time", object.getTime());
-        return db.insert(String.valueOf(SqlHelper.TableName.TODO_TABLE), null, content);
+        return db.insert(API.TODO_TABLE_NAME, null, content);
     }
 
     //删除数据
     public int deleteDataFromDB(ToDo object) {
         db = SqlHelper.getInstance().getWritableDatabase();
-        return db.delete(String.valueOf(SqlHelper.TableName.TODO_TABLE), "Id = ?", new String[]{object.getId() + ""});
+        return db.delete(API.TODO_TABLE_NAME, "Id = ?", new String[]{object.getId() + ""});
     }
 
     //修改数据
@@ -47,7 +48,7 @@ public class ToDoModel extends Model {
         contentValues.put("Title", object.getTitle());
         contentValues.put("Content", object.getContent());
         contentValues.put("Time", object.getTime());
-        return db.update(String.valueOf(SqlHelper.TableName.TODO_TABLE), contentValues, "Id = ?", new String[]{object.getId() + ""});
+        return db.update(API.TODO_TABLE_NAME, contentValues, "Id = ?", new String[]{object.getId() + ""});
     }
 
     //查询数据
@@ -55,7 +56,7 @@ public class ToDoModel extends Model {
                                   String groupBy, String having,
                                   String orderBy) {
         db = SqlHelper.getInstance().getReadableDatabase();
-        Cursor cursor = db.query(String.valueOf(SqlHelper.TableName.TODO_TABLE),
+        Cursor cursor = db.query(API.TODO_TABLE_NAME,
                 null,
                 whereClause,
                 whereArgs,
@@ -85,7 +86,7 @@ public class ToDoModel extends Model {
 
     public boolean clearDataFromDataBase() {
         db = SqlHelper.getInstance().getWritableDatabase();
-        return db.delete(String.valueOf(SqlHelper.TableName.TODO_TABLE), null, null) > 0;
+        return db.delete(API.TODO_TABLE_NAME, null, null) > 0;
     }
 
 }
