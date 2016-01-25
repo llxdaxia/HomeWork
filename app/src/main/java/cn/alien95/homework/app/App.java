@@ -21,6 +21,6 @@ public class App extends Application {
         }
 
         SqlHelper.init(this, "HomeWork");  //初始化数据库
-
+        SqlHelper.getInstance().addTable(new SqlHelper.TableName("ToDo"),);
     }
 }
