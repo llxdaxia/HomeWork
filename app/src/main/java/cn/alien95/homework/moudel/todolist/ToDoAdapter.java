@@ -43,13 +43,13 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         return toDoList.size();
     }
 
-    public void add(ToDo toDo){
+    public void add(ToDo toDo) {
         toDoList.add(toDo);
         notifyDataSetChanged();
     }
 
-    public void addToFirst(ToDo toDo){
-        toDoList.add(0,toDo);
+    public void addToFirst(ToDo toDo) {
+        toDoList.add(0, toDo);
         notifyDataSetChanged();
     }
 
@@ -58,7 +58,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         notifyDataSetChanged();
     }
 
-    public void remove(ToDo toDo){
+    public void remove(ToDo toDo) {
         toDoList.remove(toDo);
         notifyDataSetChanged();
     }
@@ -96,7 +96,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), AddToDoActivity.class);
                     intent.putExtra(ToDoListActivity.UPDATE_DATA, object);
-                    ((Activity)v.getContext()).startActivityForResult(intent,ToDoListActivity.REQUEST_CODE_ADD);
+                    ((Activity) v.getContext()).startActivityForResult(intent, ToDoListActivity.REQUEST_CODE_ADD);
                 }
             });
 
@@ -111,7 +111,8 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                             ToDoModel.getInstance().deleteDataFromDB(object);
                             toDoList.remove(object);
                             notifyDataSetChanged();
-                            MessageNotify.getInstance().sendMessage();
+                            if (toDoList.isEmpty())
+                                MessageNotify.getInstance().sendMessage();
                         }
                     });
                     builder.setNegativeButton("否", null);
