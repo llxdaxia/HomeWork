@@ -44,6 +44,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'cn.alien95:http:1.0.4'   //地址：https://github.com/llxdaxia/Http
+    compile 'cn.alien95:http:1.1.4'   //地址：https://github.com/llxdaxia/Http
+    compile 'cn.alien95:util:1.0.4'
     compile 'com.google.code.gson:gson:2.5'
 }

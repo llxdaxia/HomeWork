@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import alien95.cn.http.request.HttpCallBack;
+import alien95.cn.http.request.callback.HttpCallBack;
 import alien95.cn.http.view.HttpImageView;
 import alien95.cn.util.TimeTransform;
 import butterknife.Bind;
