@@ -2,20 +2,21 @@ package cn.alien95.homework.moudel.weather;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import com.bumptech.glide.Glide;
 
-import alien95.cn.http.request.callback.HttpCallBack;
-import alien95.cn.http.view.HttpImageView;
 import alien95.cn.util.TimeTransform;
+import alien95.cn.util.Utils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.alien95.homework.R;
 import cn.alien95.homework.app.BaseActivity;
 import cn.alien95.homework.config.API;
-import cn.alien95.homework.model.WeatherModel;
+import cn.alien95.homework.model.WeatherServiceAPIModel;
 import cn.alien95.homework.model.bean.WeatherData;
+import rx.Observer;
 
 /**
  * Created by linlongxin on 2016/1/5.
@@ -33,7 +34,8 @@ public class WeatherActivity extends BaseActivity {
     @Bind(R.id.current_temp)
     TextView currentTemp;
     @Bind(R.id.bg_image)
-    HttpImageView bgImage;
+    ImageView bgImage;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,21 +44,31 @@ public class WeatherActivity extends BaseActivity {
         ButterKnife.bind(this);
         setToolbarIsBack(true);
 
-        bgImage.setImageUrl(API.WEATHER_BG_IMG);
+        Glide.with(this)
+                .load(API.WEATHER_BG_IMG)
+                .centerCrop()
+                .into(bgImage);
 
-        WeatherModel.getInstance().getWeatherCity("重庆", new HttpCallBack() {
+        WeatherServiceAPIModel.getInstance().getWeatherFromCityName("重庆", new Observer<WeatherData>() {
             @Override
-            public void success(String info) {
-                Gson gson = new Gson();
-                WeatherData data = gson.fromJson(info, WeatherData.class);
-                if (data.resultcode == 200) {
-                    weather.setText(data.result.today.weather);
-                    rangeTemperature.setText(data.result.today.temperature);
-                    currentTemp.setText(data.result.sk.temp + "℃");
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Utils.Toast("网络错误");
+            }
+
+            @Override
+            public void onNext(WeatherData weatherData) {
+                if (weatherData.resultcode == 200) {
+                    weather.setText(weatherData.result.today.weather);
+                    rangeTemperature.setText(weatherData.result.today.temperature);
+                    currentTemp.setText(weatherData.result.sk.temp + "℃");
                     time.setText(TimeTransform.getInstance().transformFormat(System.currentTimeMillis(), "hh:ss"));
                     location.setText("重庆");
                 }
-
             }
         });
 

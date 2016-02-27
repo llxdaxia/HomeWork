@@ -4,6 +4,7 @@ import android.app.Application;
 
 import alien95.cn.http.request.Http;
 import alien95.cn.util.SqlHelper;
+import alien95.cn.util.Utils;
 import cn.alien95.homework.BuildConfig;
 import cn.alien95.homework.config.API;
 
@@ -17,12 +18,12 @@ public class App extends Application {
         super.onCreate();
 
         alien95.cn.util.Utils.initialize(this);
-        Http.initialize(this);
-        if (BuildConfig.DEBUG) {
-            alien95.cn.util.Utils.setDebug(true, "HomeWork");
-            Http.setDebug(true, "NetWork");
-        }
 
+        Http.initialize(this);
+        if(BuildConfig.DEBUG){
+            Utils.setDebug(true,"Debug");
+            Http.setDebug(true,"NetWork");
+        }
         SqlHelper.init(this, "HomeWork");  //初始化数据库
         SqlHelper.getInstance().addTable(API.TODO_TABLE_NAME, API.TODO_TABLE_SQL);  //添加数据库表
     }
